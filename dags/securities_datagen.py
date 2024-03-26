@@ -204,7 +204,7 @@ def create_dag(dag_id, schedule, default_args, args):
                     """
                 for i in range(len(stocks)):
                     previous_close = stocks[1][i]
-                    if previous_close is not int:
+                    if not previous_close:
                         previous_close = randomizer.price_normal(20000)
                     (low, open, high) = randomizer.low_open_high(previous_close)
                     cur.execute(sql, (
@@ -270,20 +270,23 @@ def create_dag(dag_id, schedule, default_args, args):
                     elif status == "03":
                         not_traded = quantity
                     traded = quantity - not_traded
-                    cur.execute(sql, (
-                        uuid.uuid4(),
-                        args["current_date"].strftime('%Y%m%d'),
-                        randomizer.choose(accounts[0].tolist()),
-                        randomizer.choose(stocks[0].tolist()),
-                        status,
-                        randomizer.binary_probability(2),
-                        quantity,
-                        price,
-                        traded,
-                        not_traded,
-                        datetime.now(),
-                        datetime.now()
-                    ))
+                    try:
+                        cur.execute(sql, (
+                            uuid.uuid4(),
+                            args["current_date"].strftime('%Y%m%d'),
+                            randomizer.choose(accounts[0].tolist()),
+                            randomizer.choose(stocks[0].tolist()),
+                            status,
+                            randomizer.binary_probability(2),
+                            quantity,
+                            price,
+                            traded,
+                            not_traded,
+                            datetime.now(),
+                            datetime.now()
+                        ))
+                    except:
+                        continue
                 conn.commit()
 
         @task()
@@ -322,18 +325,21 @@ def create_dag(dag_id, schedule, default_args, args):
                         """
                 for i in range(offers.shape[0]):
                     seller_account_number, buyer_account_number = randomizer.sample(accounts[0].tolist(), 2)
-                    cur.execute(sql, (
-                        uuid.uuid4(),
-                        offers[1][i],
-                        offers[0][i],
-                        seller_account_number,
-                        buyer_account_number,
-                        offers[2][i],
-                        offers[3][i],
-                        offers[3][i] * 0.005,
-                        datetime.now(),
-                        datetime.now()
-                    ))
+                    try:
+                        cur.execute(sql, (
+                            uuid.uuid4(),
+                            offers[0][i],
+                            offers[1][i],
+                            seller_account_number,
+                            buyer_account_number,
+                            offers[2][i],
+                            offers[3][i],
+                            offers[3][i] * 0.005,
+                            datetime.now(),
+                            datetime.now()
+                        ))
+                    except:
+                        continue
                 conn.commit()
 
 

@@ -8,10 +8,10 @@ def extract(context):
         logical_date = context['params']['logical_date']
     conn_args = {
         'mysql_host': "localhost",
-        'mysql_user': "malachai",
-        'mysql_pass': "0107",
+        'mysql_user': "",
+        'mysql_pass': "",
         'mysql_db': "securities",
-        'hdfs_host': "http://server.malachai.io",
+        'hdfs_host': "",
         'hdfs_port': "9870"
     }
     hdfs_dir_insert = "/user/airflow/etl/securities/" + logical_date + "/dim_users_inserted"
@@ -47,10 +47,10 @@ def transform(context):
 
     # insert.csv to external table
     hive_conn = {
-        'host': "server.malachai.io",
+        'host': "",
         'port': 10000,
-        'username': "hive",
-        'password': "hive",
+        'username': "",
+        'password': "",
         'database': "securities",
     }
     command_hive(
@@ -72,10 +72,10 @@ def transform(context):
 def load(context):
     # inserted
     hive_conn = {
-        'host': "server.malachai.io",
+        'host': "",
         'port': 10000,
-        'username': "hive",
-        'password': "hive",
+        'username': "",
+        'password': "",
         'database': "securities",
     }
     curkey = query_hive_current_sequence(

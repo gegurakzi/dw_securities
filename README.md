@@ -9,6 +9,3 @@
 
 ### ERD
 > https://www.erdcloud.com/d/3NZdbWtiQghuF3uvf
-
-### 모델링 과정
-> https://evening-swordtail-8fb.notion.site/132ca51370474e25bd16cd1ec9d39957?pvs=4

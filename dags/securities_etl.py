@@ -36,10 +36,10 @@ def etl_dag():
             logical_date = context['params']['logical_date']
         conn_args = {
             'mysql_host': "localhost",
-            'mysql_user': "malachai",
-            'mysql_pass': "0107",
+            'mysql_user': "",
+            'mysql_pass': "",
             'mysql_db': "securities",
-            'hdfs_host': "http://server.malachai.io",
+            'hdfs_host': "",
             'hdfs_port': "9870"
         }
         hdfs_dir_insert = "/user/airflow/etl/securities/" + logical_date + "/dim_accounts_inserted"
@@ -78,8 +78,8 @@ def etl_dag():
         hive_conn = {
             'host': "server.malachai.io",
             'port': 10000,
-            'username': "hive",
-            'password': "hive",
+            'username': "",
+            'password': "",
             'database': "securities",
         }
         command_hive(
@@ -104,8 +104,8 @@ def etl_dag():
         hive_conn = {
             'host': "server.malachai.io",
             'port': 10000,
-            'username': "hive",
-            'password': "hive",
+            'username': "",
+            'password': "",
             'database': "securities",
         }
         curkey = query_hive_current_sequence(
